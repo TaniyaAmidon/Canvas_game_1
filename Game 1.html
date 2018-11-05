@@ -50,7 +50,6 @@
                 }
             }
 
-
             function component(width, height, color, x, y, type) {
                 this.type = type;
                 this.width = width;
@@ -63,7 +62,7 @@
                     ctx = myGameArea.context;
                     if (this.type == "text") {
                         ctx.font = this.width + " " + this.height;
-                        ctx.fillstyle = color;
+                        ctx.fillStyle = color;
                         ctx.fillText(this.text, this.x, this.y);
                     } else {
                     ctx.fillStyle = color;
