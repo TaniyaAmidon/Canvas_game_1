@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <style>
+
+            canvas {
+                background-color:bisque;
+                border: 2px solid blanchedalmond;
+                
+            }
+            
+            .button {
+                text-align: center;
+                width: 500px;
+            }
+
+        </style>
+
+        <script>
+
+            var gamePiece;
+
+            function startGame(){
+                gamePiece = new component(50, 50, "images/right.png", 10, 120, "image");
+                myGameArea.start();
+
+                
+            }
+
+            var myGameArea = {
+                canvas: document.createElement("canvas"),
+                start: function() {
+                    this.canvas.width = 500;
+                    this.canvas.height = 300;
+                    this.context = this.canvas.getContext("2d");
+                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                    this.frameNo = 0;
+                    this.interval = setInterval(updateGameArea, 20);
+                },
+                clear: function() {
+                     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                },
+                stop: function() {
+                    clearInterval(this.interval);
+                }
+            }
+            
+            function component(width, height, color, x, y, type) {
+                this.type = type; // why this type
+                if (type == "image") {
+                    this.image = new Image();
+                    this.image.src = color; //why which image is this refering to 
+                }
+                this.width = width;
+                this.height = height;
+                this.speedX = 0;
+                this.speedY = 0;
+                this.x = x;
+                this.y = y;     
+                this.update = function() {
+                    ctx = myGameArea.context;
+                    if (type == "image") {
+                        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+                        console.log("here");
+                    } else {
+                        ctx.fillStyle = color;
+                        ctx.fillRect(this.x, this.y, this.width, this.height);
+                    }
+                }
+                this.newPos = function() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                }
+            }
+
+            function updateGameArea() {
+                myGameArea.clear();
+                gamePiece.newPos();
+                gamePiece.update();
+            }
+
+            function moveup(dir) {
+                gamePiece.image.src = "images/up.png";
+                if (dir == "up") {
+                    gamePiece.speedY = -1;
+                }
+
+            }
+
+            function movedown(dir) {
+                gamePiece.image.src = "images/down.png";
+                if (dir == "down") {
+                    gamePiece.speedY = +1;
+                }
+            }
+
+            function moveleft(dir) {
+                gamePiece.image.src = "images/left.png";
+                if (dir == "left") {
+                    gamePiece.speedX = -1;
+                }
+            }
+
+            function moveright(dir) {
+                gamePiece.image.src = "images/right.png";
+                if (dir == "right") {
+                    gamePiece.speedX = +1;
+                }
+            }
+
+            function clearMove() {
+                gamePiece.image.src = "images/right.png";
+                gamePiece.speedX = 0;
+                gamePiece.speedY = 0;
+            }
+
+
+        </script>
+    
+    </head>
+    <body onload="startGame()">
+
+        <div class="button">
+            <button onmousedown="moveup('up')" onmouseup="clearMove()" ontouchstart="moveup(up)">UP</button><br><br>
+            <button onmousedown="moveleft('left')" onmouseup="clearMove()" ontouchstart="moveleft(left)">LEFT</button><button onmousedown="moveright('right')" onmouseup="clearMove()" ontouchstart="moveright(right)">RIGHT</button><br><br>
+            <button onmousedown="movedown('down')" onmouseup="clearMove()" ontouchstart="movedown(down)">DOWN</button>
+        </div>
+
+    </body>
+</html>
