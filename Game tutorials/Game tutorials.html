@@ -21,9 +21,11 @@
         <script>
 
             var gamePiece;
+            var background;
 
             function startGame(){
-                gamePiece = new component(50, 50, "images/right.png", 10, 120, "image");
+                gamePiece = new component(50, 50, "images/right.png", 10, 158, "image");
+                background = new component(500, 300, "images/background.jpg", 0, 0, "image");
                 myGameArea.start();
 
                 
@@ -63,7 +65,6 @@
                     ctx = myGameArea.context;
                     if (type == "image") {
                         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-                        console.log("here");
                     } else {
                         ctx.fillStyle = color;
                         ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -77,6 +78,8 @@
 
             function updateGameArea() {
                 myGameArea.clear();
+                background.newPos();
+                background.update();
                 gamePiece.newPos();
                 gamePiece.update();
             }
