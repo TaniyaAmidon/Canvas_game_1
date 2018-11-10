@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>canvas game 2</title>
+
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+
+            #myCanvas {
+                background-color: antiquewhite;
+                border: 2px solid blue;
+                width: 1000px;
+                height: 500px;
+                display: block;
+                margin: 0 auto;
+            }
+        </style>
+
+        <script>
+            function start() {
+                var canvas = document.getElementById("myCanvas");
+                var ctx = canvas.getContext("2d");
+                ctx.beginPath();
+                ctx.rect(20, 40, 50, 50);
+                ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
+                ctx.stroke();
+                ctx.endPath();
+            }
+        </script>
+
+    </head>
+
+
+    <body onload="start()">
+        <canvas id="myCanvas"> </canvas>
+    </body>
+</html>
